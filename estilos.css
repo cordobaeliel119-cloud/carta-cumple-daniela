@@ -1,0 +1,222 @@
+/* Reset básico para evitar inconsistencias entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(120deg, #f8f3f0, #f0e6df);
+    padding: 1rem; /* Ajustado para pantallas pequeñas */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Corregido para que no se corte en móviles */
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden; /* Solo ocultar scroll horizontal */
+    overflow-y: auto; /* Permitir scroll vertical si es necesario */
+    padding-bottom: 8rem; /* Espacio para el botón de música */
+}
+
+/* Estilos y animación del confeti */
+#contenedor-confeti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Evitar que el confeti bloquee clics */
+    z-index: 5;
+}
+
+.confeti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #d65a31;
+    opacity: 0;
+    animation: caer 4s infinite ease-in;
+}
+
+.confeti:nth-child(even) {
+    background-color: #f0b8a8;
+}
+
+.confeti:nth-child(3n) {
+    background-color: #a3d2ca;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Estilos de la carta */
+.carta {
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem 1.5rem; /* Ajustado para pantallas pequeñas */
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 10;
+    margin-top: 2rem; /* Espacio en la parte superior */
+    transform: scale(0.95);
+    animation: aparecer 1.5s forwards ease-out;
+}
+
+@keyframes aparecer {
+    to {
+        transform: scale(1);
+    }
+}
+
+.carta::before {
+    content: "";
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    border: 2px dashed #f0b8a8;
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0;
+    animation: bordeAparecer 2s 0.5s forwards ease-out;
+}
+
+@keyframes bordeAparecer {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilos del texto */
+.titulo {
+    color: #d65a31;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem; /* Ajustado para móviles */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: textoEntrar 1s 1s forwards;
+}
+
+.contenido {
+    line-height: 1.8;
+    color: #3a3a3a;
+    font-size: 0.95rem; /* Ajustado para legibilidad */
+    margin-bottom: 1.2rem;
+    text-align: justify;
+    padding: 0 0.5rem; /* Espacio interno para no tocar el borde */
+    opacity: 0;
+    animation: textoEntrar 1s 1.5s forwards;
+}
+
+.destacado {
+    color: #d65a31;
+    font-weight: 600;
+    font-style: italic;
+    position: relative;
+}
+
+.destacado::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #a3d2ca;
+    transform: scaleX(0);
+    animation: subrayado 1s 2s forwards ease-out;
+}
+
+@keyframes subrayado {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.despedida {
+    color: #3a3a3a;
+    font-size: 0.95rem;
+    text-align: right;
+    margin-top: 1.5rem;
+    padding-right: 0.5rem;
+    opacity: 0;
+    animation: textoEntrar 1s 2s forwards;
+}
+
+.decoracion {
+    text-align: center;
+    margin: 1rem 0;
+    color: #f0b8a8;
+    font-size: 1.5rem;
+    opacity: 0;
+    animation: decoracionPulsar 2s 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes textoEntrar {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes decoracionPulsar {
+    from {
+        opacity: 0.7;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+/* Estilos del botón de música */
+.btn-musica {
+    position: fixed; /* Fijo para que siempre se vea */
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%); /* Centrado en móviles y escritorio */
+    padding: 0.8rem 1.5rem;
+    background-color: #d65a31;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(214, 90, 49, 0.3);
+    transition: all 0.3s ease;
+    z-index: 20;
+    font-size: 1rem;
+}
+
+.btn-musica:hover {
+    background-color: #c04a25;
+    transform: translateX(-50%) translateY(-2px);
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 600px) {
+    .carta {
+        padding: 3rem 2.5rem;
+        margin-top: 3rem;
+    }
+
+    .titulo {
+        font-size: 1.8rem;
+    }
+
+    .contenido, .despedida {
+        font-size: 1rem;
+    }
+}
